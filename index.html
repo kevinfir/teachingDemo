@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>維度褶皺：零號倉庫 | 電影專案網站</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;700;900&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #07131c;
+            --bg-soft: #102636;
+            --panel: rgba(7, 19, 28, 0.76);
+            --line: rgba(164, 220, 255, 0.18);
+            --text: #ecf6ff;
+            --muted: #9bb2c4;
+            --ice: #a7d8f2;
+            --acid: #b8ff6f;
+            --ember: #ff7a59;
+            --teal: #56f0d5;
+            --shadow: 0 24px 80px rgba(0, 0, 0, 0.42);
+            --max-width: 1180px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Space Grotesk", sans-serif;
+            color: var(--text);
+            background:
+                radial-gradient(circle at top left, rgba(86, 240, 213, 0.18), transparent 28%),
+                radial-gradient(circle at 80% 18%, rgba(255, 122, 89, 0.18), transparent 22%),
+                radial-gradient(circle at bottom right, rgba(184, 255, 111, 0.12), transparent 30%),
+                linear-gradient(180deg, #02070b 0%, #07131c 48%, #050b10 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(167, 216, 242, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(167, 216, 242, 0.05) 1px, transparent 1px);
+            background-size: 42px 42px;
+            mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.8), transparent 85%);
+            pointer-events: none;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .frame {
+            width: min(var(--max-width), calc(100% - 2rem));
+            margin: 0 auto;
+        }
+
+        .site-nav {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            backdrop-filter: blur(18px);
+            background: rgba(2, 7, 11, 0.72);
+            border-bottom: 1px solid rgba(167, 216, 242, 0.12);
+        }
+
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 0;
+            gap: 1rem;
+        }
+
+        .brand {
+            display: flex;
+            flex-direction: column;
+            gap: 0.15rem;
+        }
+
+        .brand small,
+        .eyebrow,
+        .section-kicker,
+        .meta-label {
+            text-transform: uppercase;
+            letter-spacing: 0.22em;
+            color: var(--ice);
+            font-size: 0.75rem;
+        }
+
+        .brand strong {
+            font-family: "Noto Serif TC", serif;
+            font-size: 1rem;
+            font-weight: 900;
+        }
+
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            color: var(--muted);
+            font-size: 0.95rem;
+        }
+
+        .hero {
+            position: relative;
+            padding: 6.5rem 0 4.5rem;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.25fr 0.85fr;
+            gap: 2rem;
+            align-items: end;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .eyebrow::before {
+            content: "";
+            width: 2.8rem;
+            height: 1px;
+            background: linear-gradient(90deg, var(--teal), transparent);
+        }
+
+        h1,
+        h2,
+        h3,
+        blockquote {
+            font-family: "Noto Serif TC", serif;
+            margin: 0;
+        }
+
+        h1 {
+            font-size: clamp(2.8rem, 7vw, 5.6rem);
+            line-height: 0.96;
+            max-width: 10ch;
+            text-wrap: balance;
+        }
+
+        .hero-subtitle {
+            margin-top: 1.25rem;
+            color: var(--ice);
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            max-width: 42rem;
+            line-height: 1.8;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .button,
+        .ghost-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 3rem;
+            padding: 0.85rem 1.3rem;
+            border-radius: 999px;
+            font-weight: 700;
+            transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+        }
+
+        .button {
+            background: linear-gradient(135deg, var(--ember), #ffb266);
+            color: #081018;
+            box-shadow: 0 18px 30px rgba(255, 122, 89, 0.28);
+        }
+
+        .ghost-button {
+            border: 1px solid rgba(167, 216, 242, 0.3);
+            color: var(--text);
+            background: rgba(167, 216, 242, 0.06);
+        }
+
+        .button:hover,
+        .ghost-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .hero-card,
+        .panel,
+        .character-card,
+        .timeline-item,
+        .budget-card,
+        .metric-card {
+            background: var(--panel);
+            border: 1px solid var(--line);
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(18px);
+        }
+
+        .hero-card {
+            padding: 1.4rem;
+            border-radius: 1.75rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-card::after {
+            content: "REPOSITORY ZERO";
+            position: absolute;
+            right: -1rem;
+            bottom: -0.5rem;
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            font-weight: 700;
+            color: rgba(167, 216, 242, 0.06);
+            letter-spacing: 0.1em;
+        }
+
+        .meta-stack {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .meta-row {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(167, 216, 242, 0.09);
+        }
+
+        .meta-row:last-child {
+            border-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .meta-value {
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        main section {
+            padding: 1.5rem 0 1.75rem;
+        }
+
+        .section-head {
+            display: grid;
+            grid-template-columns: 0.9fr 1.1fr;
+            gap: 2rem;
+            align-items: end;
+            margin-bottom: 1.75rem;
+        }
+
+        .section-head h2 {
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            line-height: 1.05;
+        }
+
+        .section-head p {
+            margin: 0;
+            color: var(--muted);
+            line-height: 1.8;
+        }
+
+        .panel {
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+        }
+
+        .logline {
+            font-size: clamp(1.2rem, 2.5vw, 1.75rem);
+            line-height: 1.85;
+            color: var(--text);
+        }
+
+        .info-grid,
+        .visual-grid,
+        .market-grid,
+        .budget-grid,
+        .closing-grid,
+        .trailer-grid {
+            display: grid;
+            gap: 1.25rem;
+        }
+
+        .info-grid {
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+
+        .metric-card {
+            border-radius: 1.25rem;
+            padding: 1.25rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(184, 255, 111, 0.1), transparent 50%);
+            pointer-events: none;
+        }
+
+        .metric-card strong {
+            display: block;
+            font-size: 1.15rem;
+            margin-top: 0.55rem;
+        }
+
+        .metric-card p {
+            margin: 0.8rem 0 0;
+            color: var(--muted);
+            line-height: 1.7;
+        }
+
+        .characters {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 1.25rem;
+        }
+
+        .trailer-grid {
+            grid-template-columns: 1.2fr 0.8fr;
+            align-items: start;
+        }
+
+        .video-shell {
+            position: relative;
+            overflow: hidden;
+            border-radius: 1.5rem;
+            background: linear-gradient(180deg, rgba(86, 240, 213, 0.08), rgba(7, 19, 28, 0.86));
+        }
+
+        .video-shell::before {
+            content: "Crawler Trailer";
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            z-index: 1;
+            padding: 0.35rem 0.7rem;
+            border-radius: 999px;
+            border: 1px solid rgba(167, 216, 242, 0.15);
+            background: rgba(2, 7, 11, 0.55);
+            color: var(--ice);
+            font-size: 0.72rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+        }
+
+        .video-shell video {
+            display: block;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            object-fit: cover;
+            background: #02070b;
+        }
+
+        .character-card {
+            padding: 1.5rem;
+            border-radius: 1.4rem;
+            position: relative;
+            min-height: 22rem;
+        }
+
+        .character-card h3 {
+            font-size: 1.6rem;
+            margin-top: 0.25rem;
+        }
+
+        .character-role {
+            color: var(--acid);
+            font-size: 0.95rem;
+            margin: 0.55rem 0 1rem;
+        }
+
+        .character-card p {
+            margin: 0.55rem 0;
+            color: var(--muted);
+            line-height: 1.75;
+        }
+
+        .character-card p strong {
+            color: var(--text);
+        }
+
+        .visual-grid {
+            grid-template-columns: 1.05fr 0.95fr;
+        }
+
+        .visual-list,
+        .position-list,
+        .closing-list {
+            display: grid;
+            gap: 0.95rem;
+            margin-top: 1rem;
+        }
+
+        .list-item {
+            padding: 1rem 1.1rem;
+            border-radius: 1rem;
+            background: rgba(167, 216, 242, 0.04);
+            border: 1px solid rgba(167, 216, 242, 0.08);
+        }
+
+        .list-item strong {
+            display: block;
+            margin-bottom: 0.4rem;
+        }
+
+        .list-item p {
+            margin: 0;
+            color: var(--muted);
+            line-height: 1.7;
+        }
+
+        .market-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .timeline {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .timeline-item {
+            display: grid;
+            grid-template-columns: 7.2rem 1fr;
+            gap: 1rem;
+            border-radius: 1.2rem;
+            padding: 1.2rem;
+        }
+
+        .timeline-time {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--acid);
+        }
+
+        .timeline-item h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.55rem;
+        }
+
+        .timeline-item ul {
+            margin: 0;
+            padding-left: 1.2rem;
+            color: var(--muted);
+            line-height: 1.8;
+        }
+
+        .budget-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .budget-card {
+            border-radius: 1.25rem;
+            padding: 1.25rem;
+        }
+
+        .budget-head {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            align-items: baseline;
+        }
+
+        .budget-card p {
+            margin: 0.7rem 0 0.9rem;
+            color: var(--muted);
+            line-height: 1.7;
+        }
+
+        .bar {
+            height: 0.8rem;
+            border-radius: 999px;
+            background: rgba(167, 216, 242, 0.08);
+            overflow: hidden;
+        }
+
+        .bar span {
+            display: block;
+            height: 100%;
+            border-radius: inherit;
+            background: linear-gradient(90deg, var(--teal), var(--acid));
+        }
+
+        .quote-panel {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quote-panel::before {
+            content: "";
+            position: absolute;
+            inset: auto -15% -45% auto;
+            width: 18rem;
+            height: 18rem;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 122, 89, 0.28), transparent 70%);
+            filter: blur(12px);
+        }
+
+        blockquote {
+            position: relative;
+            font-size: clamp(1.25rem, 2.2vw, 1.9rem);
+            line-height: 1.8;
+            max-width: 34rem;
+            z-index: 1;
+        }
+
+        .quote-credit {
+            position: relative;
+            z-index: 1;
+            margin-top: 1.25rem;
+            color: var(--ice);
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+        }
+
+        .closing-grid {
+            grid-template-columns: 1.1fr 0.9fr;
+            align-items: center;
+        }
+
+        .closing-list .list-item {
+            background: rgba(184, 255, 111, 0.05);
+        }
+
+        footer {
+            padding: 1.2rem 0 3rem;
+            color: var(--muted);
+            font-size: 0.92rem;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: reveal 0.9s ease forwards;
+        }
+
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+
+        @keyframes reveal {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 980px) {
+            .hero-grid,
+            .section-head,
+            .trailer-grid,
+            .visual-grid,
+            .closing-grid,
+            .market-grid,
+            .budget-grid,
+            .characters,
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 720px) {
+            .hero {
+                padding-top: 4.75rem;
+            }
+
+            .nav-inner {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            h1 {
+                max-width: none;
+            }
+
+            .timeline-item,
+            .meta-row {
+                grid-template-columns: 1fr;
+            }
+
+            .panel,
+            .hero-card,
+            .character-card,
+            .timeline-item,
+            .budget-card,
+            .metric-card {
+                padding: 1.15rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="site-nav">
+        <div class="frame nav-inner">
+            <div class="brand">
+                <small>Film Proposal Website</small>
+                <strong>維度褶皺：零號倉庫</strong>
+            </div>
+            <div class="nav-links">
+                <a href="#overview">概念</a>
+                <a href="#trailer">預告</a>
+                <a href="#characters">角色</a>
+                <a href="#visual">視覺</a>
+                <a href="#production">製作</a>
+                <a href="#budget">預算</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero frame">
+        <div class="hero-grid">
+            <div class="reveal">
+                <div class="eyebrow">Hard Sci-Fi / Psychological Thriller / Cosmic Horror</div>
+                <h1>維度褶皺：<br>零號倉庫</h1>
+                <p class="hero-subtitle">
+                    2026 年，空間不再只是距離，而是一座可以被裁切、摺疊、搬運與交換的活體倉庫。當主角陸沉能從虛空中取得任何物件，代價卻是逐步交出自己的記憶與人性，整個世界也開始朝著不可逆的摺疊崩壞滑落。
+                </p>
+                <div class="hero-actions">
+                    <a class="button" href="#overview">查看專案亮點</a>
+                    <a class="ghost-button" href="#closing">投資合作方向</a>
+                </div>
+            </div>
+
+            <aside class="hero-card reveal delay-1">
+                <div class="meta-stack">
+                    <div class="meta-row">
+                        <div class="meta-label">中文片名</div>
+                        <div class="meta-value">維度褶皺：零號倉庫</div>
+                    </div>
+                    <div class="meta-row">
+                        <div class="meta-label">英文片名</div>
+                        <div class="meta-value">Dimensional Crease: Repository Zero</div>
+                    </div>
+                    <div class="meta-row">
+                        <div class="meta-label">預計片長</div>
+                        <div class="meta-value">110 分鐘</div>
+                    </div>
+                    <div class="meta-row">
+                        <div class="meta-label">核心命題</div>
+                        <div class="meta-value">如果你能從虛空中取得任何東西，代價是交出「自我」，你還剩下什麼？</div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </header>
+
+    <main>
+        <section id="overview" class="frame">
+            <div class="section-head reveal">
+                <div>
+                    <div class="section-kicker">Project Overview</div>
+                    <h2>把科幻概念拍成感官威脅</h2>
+                </div>
+                <p>
+                    本片結合硬科幻、心理驚悚與克蘇魯式宇宙恐怖，以空間摺疊為視覺主軸，將記憶、自我認同與存在危機具象化。網站呈現方向採用提案式編排，讓投資人、製片方與發行端能迅速理解藝術定位、技術難度與市場潛力。
+                </p>
+            </div>
+
+            <div class="panel reveal delay-1">
+                <div class="section-kicker">Logline</div>
+                <p class="logline">
+                    2026 年，空間已非距離，而是一座層疊的「倉庫」。天才維度裁縫師陸沉能從摺疊空間中取物，卻發現這座倉庫其實是活生生的高維意識體。每次提取物質，他都以自己的記憶與人性作為交換，直到現實世界也面臨被徹底摺疊的危機。
+                </p>
+            </div>
+
+            <div class="info-grid">
+                <article class="metric-card reveal delay-1">
+                    <div class="meta-label">Genre Fusion</div>
+                    <strong>硬科幻 x 心理驚悚 x 宇宙恐怖</strong>
+                    <p>以廣義相對論與維度幾何為理論質地，讓世界觀具有硬核可信度，同時保留不可名狀的恐懼感。</p>
+                </article>
+                <article class="metric-card reveal delay-2">
+                    <div class="meta-label">Narrative Engine</div>
+                    <strong>每一次取物，都是一次人格流失</strong>
+                    <p>能力並非超能力炫技，而是與角色精神狀態直接綁定的敘事引擎，讓情節推進與心理崩解同時發生。</p>
+                </article>
+                <article class="metric-card reveal delay-3">
+                    <div class="meta-label">Audience Hook</div>
+                    <strong>從視覺奇觀切入，再用哲學命題留下餘震</strong>
+                    <p>先用空間戰鬥與維度奇觀抓住注意力，再把觀眾拖入對記憶、身份與孤獨的深層追問。</p>
+                </article>
+                <article class="metric-card reveal delay-4">
+                    <div class="meta-label">Commercial Angle</div>
+                    <strong>華語市場少見的高概念原創科幻</strong>
+                    <p>具備國際市場辨識度與串流平台宣傳話題性，能以風格與概念差異化切入科幻驚悚賽道。</p>
+                </article>
+            </div>
+        </section>
+
+        <section id="trailer" class="frame">
+            <div class="section-head reveal">
+                <div>
+                    <div class="section-kicker">Trailer Showcase</div>
+                    <h2>把 crawler 當成提案頁的前導預告片</h2>
+                </div>
+                <p>
+                    預告片展示直接嵌入網站主頁，讓瀏覽者不必離開提案頁就能快速理解本片的氛圍、節奏與視覺語彙，也方便作為提案連結或簡報補充素材使用。
+                </p>
+            </div>
+
+            <div class="trailer-grid">
+                <div class="panel video-shell reveal delay-1">
+                    <video controls preload="metadata" playsinline>
+                        <source src="{{ url_for('media', filename='crawler.mp4') }}" type="video/mp4">
+                        您的瀏覽器不支援 HTML5 影片播放。
+                    </video>
+                </div>
+
+                <aside class="panel reveal delay-2">
+                    <div class="section-kicker">Preview Notes</div>
+                    <div class="visual-list">
+                        <div class="list-item">
+                            <strong>用途定位</strong>
+                            <p>作為提案頁中的前導影像，優先傳達世界觀質地與情緒壓迫感，而不是單純資訊補充。</p>
+                        </div>
+                        <div class="list-item">
+                            <strong>展示情境</strong>
+                            <p>適合放在投資簡報連結、製片會議頁面與對外提案網站中，降低觀者理解門檻。</p>
+                        </div>
+                        <div class="list-item">
+                            <strong>後續可擴充</strong>
+                            <p>之後可以再補概念圖輪播、劇照集或幕後 VFX breakdown，延伸成完整 pitch site。</p>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+        <section id="characters" class="frame">
+            <div class="section-head reveal">
+                <div>
+                    <div class="section-kicker">Characters</div>
+                    <h2>角色不是功能，而是崩壞座標</h2>
+                </div>
+                <p>
+                    三個核心角色分別代表操控、凝視與吞噬。人物配置不追求大規模群像，而是讓少數角色在高密度情境中承載敘事壓力，避免概念被無效支線稀釋。
+                </p>
+            </div>
+
+            <div class="characters">
+                <article class="character-card reveal delay-1">
+                    <div class="meta-label">Lead</div>
+                    <h3>陸沉 Lu Chen</h3>
+                    <div class="character-role">男主角 / 30s / 前尖端物理學家</div>
+                    <p><strong>背景</strong> 前尖端物理學家，現在是黑市最頂尖的維度搬運工。</p>
+                    <p><strong>特質</strong> 冷靜、病態、極端理性，記憶卻已支離破碎。</p>
+                    <p><strong>角色弧光</strong> 從傲慢地試圖掌控維度法則，到理解自己不過是被更高層存在利用的容器，最終被迫在成神與毀滅間做出抉擇。</p>
+                </article>
+
+                <article class="character-card reveal delay-2">
+                    <div class="meta-label">Entity</div>
+                    <h3>零號倉庫</h3>
+                    <div class="character-role">反派 / 高維意識集合體</div>
+                    <p><strong>背景</strong> 並非場景，而是一個活的、高維度、會交換與吞噬的意識集合。</p>
+                    <p><strong>表現</strong> 透過聲音、環境異常、資訊蠕動與感官錯位和陸沉對話，從不以完整實體出現。</p>
+                    <p><strong>功能</strong> 它提供力量，也在重新書寫使用者的存在定義，讓交易行為同時成為精神殖入。</p>
+                </article>
+
+                <article class="character-card reveal delay-3">
+                    <div class="meta-label">Witness</div>
+                    <h3>艾琳 Eryn</h3>
+                    <div class="character-role">女配角 / 28s / 跨國武裝組織追蹤官</div>
+                    <p><strong>背景</strong> 代表現實秩序與地面行動能力，是最先追上陸沉的人。</p>
+                    <p><strong>特質</strong> 堅定、理智、自我要求極高，卻在目睹空間摺疊後逐步崩解既有世界觀。</p>
+                    <p><strong>作用</strong> 作為觀眾情感接口，承接對未知恐懼的第一層反應，並逼出陸沉最後的人性選擇。</p>
+                </article>
+            </div>
+        </section>
+
+        <section id="visual" class="frame">
+            <div class="section-head reveal">
+                <div>
+                    <div class="section-kicker">Visual & Artistic Direction</div>
+                    <h2>不是光束魔法，而是空間被硬扯開</h2>
+                </div>
+                <p>
+                    視覺策略必須把「摺疊」從抽象名詞變成有重量、有阻力、有不適感的電影語言。現實與高維空間的質地差異，是整部片觀感成立的關鍵。
+                </p>
+            </div>
+
+            <div class="visual-grid">
+                <div class="panel reveal delay-1">
+                    <div class="section-kicker">Image Language</div>
+                    <div class="visual-list">
+                        <div class="list-item">
+                            <strong>現實世界</strong>
+                            <p>高對比冷色調，主色為深藍、炭灰與金屬銀，壓低飽和度，讓現實顯得像被抽乾情感的工業殘響。</p>
+                        </div>
+                        <div class="list-item">
+                            <strong>高維空間</strong>
+                            <p>使用非自然色彩，如酸性螢光綠、熾橘與病態青藍，配合分形幾何與資訊流體，營造同時神聖又污染性的空間感。</p>
+                        </div>
+                        <div class="list-item">
+                            <strong>攝影與構圖</strong>
+                            <p>以 Dolly Zoom、壓縮鏡頭、多重曝光與局部透視錯位，讓角色彷彿逐步失去在三維世界中的固定位置。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel reveal delay-2">
+                    <div class="section-kicker">Effects & Sound</div>
+                    <div class="visual-list">
+                        <div class="list-item">
+                            <strong>憑空造物效果</strong>
+                            <p>以逆向分解與分子重組感呈現物體被「拔出」褶皺的暴力感，而非傳統粒子光束生成。</p>
+                        </div>
+                        <div class="list-item">
+                            <strong>空間音效設計</strong>
+                            <p>結合低頻震盪、白噪與環繞式耳語，模擬高維度低語壓迫胸腔與聽覺邊界的體感。</p>
+                        </div>
+                        <div class="list-item">
+                            <strong>存在崩解感</strong>
+                            <p>在角色記憶流失時引入殘影、局部透明化與不同時間層的疊影，讓「我還是不是我」被看見。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="market" class="frame">
+            <div class="section-head reveal">
+                <div>
+                    <div class="section-kicker">Market Positioning</div>
+                    <h2>概念夠硬，情緒夠深，宣傳點夠鮮明</h2>
+                </div>
+                <p>
+                    市場策略不是把本片當成一般怪物片販售，而是強調其高概念原創性與跨圈層吸引力。它既能打到硬核科幻受眾，也能切入驚悚與作者型影迷市場。
+                </p>
+            </div>
+
+            <div class="market-grid">
+                <div class="panel reveal delay-1">
+                    <div class="section-kicker">Selling Points</div>
+                    <div class="position-list">
+                        <div class="list-item">
+                            <strong>視覺奇觀</strong>
+                            <p>空間摺疊戰鬥打破槍戰與魔法的既有分界，提供新鮮且高辨識度的預告片素材。</p>
+                        </div>
+                        <div class="list-item">
+                            <strong>硬科幻核心</strong>
+                            <p>以維度幾何與時空理論包裝超現實場面，容易引發科技媒體與科幻社群二次討論。</p>
+                        </div>
+                        <div class="list-item">
+                            <strong>心理共鳴</strong>
+                            <p>記憶流失與自我崩解的命題具有普遍情緒入口，能超越純設定黨受眾。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel reveal delay-2">
+                    <div class="section-kicker">Audience Reach</div>
+                    <div class="position-list">
+                        <div class="list-item">
+                            <strong>科幻硬核愛好者</strong>
+                            <p>喜歡世界觀自洽與概念延展，會對維度摺疊與高維意識設定有高度興趣。</p>
+                        </div>
+                        <div class="list-item">
+                            <strong>驚悚片觀眾</strong>
+                            <p>宇宙恐怖的不可名狀感與聲音壓迫能提供與一般跳 scare 不同的深層不安。</p>
+                        </div>
+                        <div class="list-item">
+                            <strong>國際發行與串流</strong>
+                            <p>英文片名與高概念 premise 明確，利於海外市場簡報、影展提案與串流平台定位。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="production" class="frame">
+            <div class="section-head reveal">
+                <div>
+                    <div class="section-kicker">Production Phases</div>
+                    <h2>把風險前置，讓想像變成可執行的製作流程</h2>
+                </div>
+                <p>
+                    這類高概念電影的成功不只取決於劇本，更取決於前期視覺驗證是否扎實。製作階段規劃採取先驗證關鍵鏡頭與技術鏈，再進入拍攝與大量後期的策略。
+                </p>
+            </div>
+
+            <div class="timeline">
+                <article class="timeline-item reveal delay-1">
+                    <div class="timeline-time">4 個月</div>
+                    <div>
+                        <h3>前期準備</h3>
+                        <ul>
+                            <li>劇本完善與分鏡腳本優化，確立每個高維場景的視覺語言。</li>
+                            <li>視覺特效預覽製作，先行測試空間摺疊、取物與資訊海洋等關鍵鏡頭。</li>
+                            <li>核心場景與道具規劃，建立零號倉庫的實景基底與服裝風格。</li>
+                            <li>預算初估、排程細化與核心團隊組建，提前鎖定攝影、美術與 VFX 溝通介面。</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <article class="timeline-item reveal delay-2">
+                    <div class="timeline-time">3 個月</div>
+                    <div>
+                        <h3>拍攝期</h3>
+                        <ul>
+                            <li>實景拍攝結合動態追蹤與綠幕工作站，確保角色表演與空間變形能被精準銜接。</li>
+                            <li>重要鏡頭現場即時做基本預覽，避免後期才發現構圖與動線失真。</li>
+                            <li>優先完成高技術風險場次，再補拍情感與過場段落，降低時程連鎖風險。</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <article class="timeline-item reveal delay-3">
+                    <div class="timeline-time">8 個月</div>
+                    <div>
+                        <h3>後期製作</h3>
+                        <ul>
+                            <li>CGI 重點放在高維空間動態流形模擬與視覺重影的存在錯位效果。</li>
+                            <li>調色建立現實與維度空間的極端對比，讓兩個世界在情緒上徹底分離。</li>
+                            <li>配樂邀請電子實驗音樂家打造壓抑的人造音景，強化宇宙低語的身體性壓迫。</li>
+                        </ul>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section id="budget" class="frame">
+            <div class="section-head reveal">
+                <div>
+                    <div class="section-kicker">Estimated Budget Allocation</div>
+                    <h2>資金投入重點明確，不平均分配</h2>
+                </div>
+                <p>
+                    本片靈魂在於視覺特效與空間感官設計，因此預算規劃採取高度集中策略，把資源投到真正會被觀眾看見、會被市場記住的部分。
+                </p>
+            </div>
+
+            <div class="budget-grid">
+                <article class="budget-card reveal delay-1">
+                    <div class="budget-head">
+                        <strong>視覺特效 VFX</strong>
+                        <span>40%</span>
+                    </div>
+                    <p>本片最大賣點與技術門檻所在，直接決定高維空間、零號倉庫與取物效果是否成立。</p>
+                    <div class="bar"><span style="width: 40%"></span></div>
+                </article>
+                <article class="budget-card reveal delay-2">
+                    <div class="budget-head">
+                        <strong>拍攝成本 Cast & Crew</strong>
+                        <span>30%</span>
+                    </div>
+                    <p>用於主要演員、攝影、美術、特效執行與現場技術團隊，確保整體製作品質穩定。</p>
+                    <div class="bar"><span style="width: 30%"></span></div>
+                </article>
+                <article class="budget-card reveal delay-3">
+                    <div class="budget-head">
+                        <strong>美術與道具</strong>
+                        <span>15%</span>
+                    </div>
+                    <p>重點投入零號倉庫物理實景基底、關鍵道具與視覺一致性的材質設計。</p>
+                    <div class="bar"><span style="width: 15%"></span></div>
+                </article>
+                <article class="budget-card reveal delay-4">
+                    <div class="budget-head">
+                        <strong>營銷與宣發 P&A</strong>
+                        <span>15%</span>
+                    </div>
+                    <p>聚焦前導概念視覺、預告片、影展提案與社群素材，放大高概念原創的討論聲量。</p>
+                    <div class="bar"><span style="width: 15%"></span></div>
+                </article>
+            </div>
+        </section>
+
+        <section id="director-note" class="frame">
+            <div class="panel quote-panel reveal">
+                <div class="section-kicker">Director's Note</div>
+                <blockquote>
+                    「這部片不只是關於科技失控，而是關於孤獨。陸沉能擁有萬物，卻在慢慢失去自己。我們要把零號倉庫拍成一個讓人嚮往卻又極度恐懼的黑洞，讓觀眾離開電影院時，會不自覺盯著空氣中的空隙看。」
+                </blockquote>
+                <div class="quote-credit">Director Memo</div>
+            </div>
+        </section>
+
+        <section id="closing" class="frame">
+            <div class="closing-grid">
+                <div class="reveal">
+                    <div class="section-kicker">Closing</div>
+                    <h2>一部可視覺化、可討論、可被市場記住的華語科幻提案</h2>
+                    <p class="hero-subtitle">
+                        《維度褶皺：零號倉庫》以突破性的視覺語言、清晰的市場辨識度與足夠深的哲學命題，瞄準成為華語原創科幻的新代表作。它不只是設定有趣，而是能被製作、能被行銷、也能被觀眾帶出戲院持續思考的作品。
+                    </p>
+                </div>
+                <div class="closing-list reveal delay-1">
+                    <div class="list-item">
+                        <strong>適合提案對象</strong>
+                        <p>投資人、製片公司、串流平台內容採購、影展市場單位與國際發行夥伴。</p>
+                    </div>
+                    <div class="list-item">
+                        <strong>合作切入點</strong>
+                        <p>開發資金、VFX 合作、國際銷售代理、前導視覺包裝與跨國聯合製作。</p>
+                    </div>
+                    <div class="list-item">
+                        <strong>網站用途</strong>
+                        <p>作為簡報延伸頁、提案連結頁與風格展示頁，可進一步擴充劇照、概念圖與聯絡資訊。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="frame">
+        Dimensional Crease: Repository Zero Proposal Site | 以電影專案提案展示為目標設計
+    </footer>
+</body>
+</html>
