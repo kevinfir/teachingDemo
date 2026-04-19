@@ -360,12 +360,16 @@
             text-transform: uppercase;
         }
 
-        .video-shell video {
+        .video-shell video,
+        .video-shell iframe {
             display: block;
             width: 100%;
             aspect-ratio: 16 / 9;
-            object-fit: cover;
             background: #02070b;
+        }
+
+        .video-shell iframe {
+            border: 0;
         }
 
         .character-card {
@@ -719,10 +723,14 @@
 
             <div class="trailer-grid">
                 <div class="panel video-shell reveal delay-1">
-                    <video controls preload="metadata" playsinline>
-                        <source src="{{ url_for('media', filename='crawler.mp4') }}" type="video/mp4">
-                        您的瀏覽器不支援 HTML5 影片播放。
-                    </video>
+                    <iframe
+                        src="https://www.youtube.com/embed/UZUXVAkE2Os?rel=0"
+                        title="Dimensional Crease Trailer"
+                        loading="lazy"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allowfullscreen
+                    ></iframe>
                 </div>
 
                 <aside class="panel reveal delay-2">
