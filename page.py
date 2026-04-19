@@ -12,7 +12,7 @@ def index():
 	return render_template("index.html")
 
 
-@app.route("/media/<path:filename>")
+@app.route("https://1ts6gtvwk4rvycwk.private.blob.vercel-storage.com/crawler.mp4")
 def media(filename):
 	if filename != "crawler.mp4":
 		abort(404)
